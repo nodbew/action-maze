@@ -1,9 +1,8 @@
-import { ITEMS, SituationNames } from "../data";
-import type { Item } from "../types/inventory";
-import type { Action, Situation } from "../types/situation";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { ITEMS, SituationNames } from "../data";
+import type { Action, Situation } from "../types/situation";
 
 export const NAVIGATION_TARGET = {
   SUCCESS: Symbol("Success"),
@@ -19,7 +18,7 @@ export function createSituation(
           type: "next";
           navigate: SituationNames | number;
           requiredItems?: Array<keyof typeof ITEMS>;
-          addItems?: Array<Item<keyof typeof ITEMS>>;
+          addItems?: Array<keyof typeof ITEMS>;
         }
       | {
           type: "end";
@@ -58,10 +57,13 @@ export function createSituation(
             const itemsToAdd =
               addItems?.filter(
                 (item) =>
-                  item.stackable ||
-                  !inventory.some((item2) => item.name === item2.name)
+                  ITEMS[item].stackable ||
+                  !inventory.some((item2) => ITEMS[item].name === item2.name)
               ) ?? []; // Filter out items that are not stackable and is already in inventory
-            setInventory((prev) => [...prev, ...itemsToAdd]);
+            setInventory((prev) => [
+              ...prev,
+              ...itemsToAdd.map((item) => ITEMS[item]),
+            ]);
             // Redirect to the next situation
             if (typeof navigate === "number") {
               if (navigate <= situationHistory.length) {
@@ -105,11 +107,11 @@ export function createSituation(
             ) ?? true
           );
           let href;
-          switch (navigate.description) {
-            case "Success":
+          switch (navigate) {
+            case NAVIGATION_TARGET.SUCCESS:
               href = `result/success/${encodeURIComponent(message)}`;
               break;
-            case "Failure":
+            case NAVIGATION_TARGET.FAILURE:
               href = `result/failure/${encodeURIComponent(message)}`;
               break;
             default:

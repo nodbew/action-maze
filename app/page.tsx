@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import InfoDialog from "@/features/informing/components/InfoDialog";
 import CreditsPageLink from "@/features/informing/components/CreditsPageLink";
+import InfoDialog from "@/features/informing/components/InfoDialog";
+import Link from "next/link";
 
 export default function Page() {
   return (

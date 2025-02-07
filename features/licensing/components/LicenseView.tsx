@@ -5,8 +5,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { LICENSES } from "../data";
 import { ComponentProps } from "react";
+import { LICENSES } from "../data";
 
 export default function LicenseView(props: ComponentProps<typeof Command>) {
   return (

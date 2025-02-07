@@ -1,8 +1,8 @@
-import { describe, expect, it } from "vitest";
 import { render, screen } from "@testing-library/react";
+import { describe, expect, it } from "vitest";
 
-import Page from "./page";
 import { ITEMS } from "@/features/game/data";
+import Page from "./page";
 
 describe.concurrent("All credits are properly shown on the screen", () => {
   render(<Page />);

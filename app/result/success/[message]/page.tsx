@@ -1,5 +1,5 @@
-import Confetti from "../../../../features/result/components/Confetti";
 import ResultMessage from "@/features/result/components/ResultMessage";
+import Confetti from "../../../../features/result/components/Confetti";
 
 export default async function Page({
   params,

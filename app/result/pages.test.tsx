@@ -1,9 +1,9 @@
-import { describe, expect, it } from "vitest";
 import { render, screen } from "@testing-library/react";
+import { describe, expect, it } from "vitest";
 
 import ErrorPage from "./error/[message]/page";
-import SuccessPage from "./success/[message]/page";
 import FailurePage from "./failure/[message]/page";
+import SuccessPage from "./success/[message]/page";
 
 const createPromise = async <T,>(obj: T) => obj;
 let { rerender } = render(<></>);

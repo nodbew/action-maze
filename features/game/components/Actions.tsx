@@ -1,7 +1,7 @@
-import type { Inventory } from "@/features/game/types/inventory";
-import type { Action, SituationHistory } from "../types/situation";
 import { Command, CommandItem, CommandList } from "@/components/ui/command";
+import type { Inventory } from "@/features/game/types/inventory";
 import { ComponentProps, Dispatch, SetStateAction } from "react";
+import type { Action, SituationHistory } from "../types/situation";
 
 export default function Actions(
   props: Omit<

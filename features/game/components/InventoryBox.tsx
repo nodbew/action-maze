@@ -1,10 +1,5 @@
+import { Command, CommandItem, CommandList } from "@/components/ui/command";
 import { Inventory } from "@/features/game/types/inventory";
-import {
-  Command,
-  CommandGroup,
-  CommandItem,
-  CommandList,
-} from "@/components/ui/command";
 import { ComponentProps } from "react";
 
 export default function InventoryBox(

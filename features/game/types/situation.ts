@@ -1,6 +1,6 @@
 import { Dispatch, ReactNode, SetStateAction } from "react";
-import { Inventory } from "./inventory";
 import { SituationNames } from "../data";
+import { Inventory } from "./inventory";
 
 type UnremoveableArray<T extends Array<unknown>> = Pick<
   T,

@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
-import { afterAll, describe, expect, it } from "vitest";
 import user from "@testing-library/user-event";
+import { afterAll, describe, expect, it } from "vitest";
 import Page from "./page";
 
 render(<Page />);
