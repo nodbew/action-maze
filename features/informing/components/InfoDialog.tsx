@@ -28,7 +28,7 @@ export default function InfoDialog(props: {
               A single wrong decision will trap you in forever.
               Choose the right actions to escape!
               
-              N.B. 
+              Note:
               Items in your inventory might help...`}
           </DialogDescription>
         </DialogHeader>

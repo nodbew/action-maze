@@ -1,6 +1,6 @@
 {
   "name": "action-maze",
-  "version": "0.5.0",
+  "version": "0.6.1",
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.5",
     "@radix-ui/react-navigation-menu": "^1.2.4",
@@ -18,13 +18,11 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3",
-    "@sveltejs/vite-plugin-svelte": "^5.0.3",
+    "@playwright/test": "^1.50.1",
     "@tailwindcss/postcss": "^4.0.0",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.2.0",
-    "@testing-library/svelte": "^5.2.6",
     "@testing-library/user-event": "^14.6.1",
     "@types/node": "^22",
     "@types/react": "^19",
@@ -37,7 +35,6 @@
     "tailwindcss": "^4.0.0",
     "ts-node": "^10.9.2",
     "typescript": "^5",
-    "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^3.0.4"
   },
   "private": true,
@@ -46,6 +43,8 @@
     "dev": "next dev --turbopack",
     "lint": "next lint",
     "start": "next start",
-    "test": "vitest"
+    "run-vitest": "vitest",
+    "run-playwright": "pnpm exec playwright test",
+    "test": "run-vitest && run-playwright"
   }
 }

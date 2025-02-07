@@ -21,9 +21,9 @@ describe.concurrent("All credits are properly shown on the screen", () => {
     Object.keys(LICENSES).forEach(async (packageName) => {
       // Added async here
       const button = screen.getByText(packageName);
-      user.click(button);
+      await user.click(button);
 
-      const dialog = await screen.findByRole("dialog");
+      const dialog = screen.getByRole("dialog");
       const origin = dialog.querySelector("a")?.origin;
       const closeButton = dialog.querySelector("svg");
       expect(origin).toContain("github");

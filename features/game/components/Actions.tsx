@@ -4,15 +4,18 @@ import { Command, CommandItem, CommandList } from "@/components/ui/command";
 import { ComponentProps, Dispatch, SetStateAction } from "react";
 
 export default function Actions(
-  props: ComponentProps<typeof Command> & {
-    actions: Array<Action>;
-    variables: {
-      inventory: Inventory;
-      setInventory: Dispatch<SetStateAction<Inventory>>;
-      situationHistory: SituationHistory;
-      setSituationHistory: Dispatch<SetStateAction<SituationHistory>>;
-    };
-  }
+  props: Omit<
+    ComponentProps<typeof Command> & {
+      actions: Array<Action>;
+      variables: {
+        inventory: Inventory;
+        setInventory: Dispatch<SetStateAction<Inventory>>;
+        situationHistory: SituationHistory;
+        setSituationHistory: Dispatch<SetStateAction<SituationHistory>>;
+      };
+    },
+    "label"
+  >
 ) {
   const {
     actions,
@@ -25,7 +28,7 @@ export default function Actions(
     ...others
   } = props;
   return (
-    <Command {...others}>
+    <Command {...others} data-testid="Actions">
       <CommandList className="max-h-none w-full">
         {actions.map(({ component }, idx) => (
           <CommandItem key={idx} className="text-2xl">

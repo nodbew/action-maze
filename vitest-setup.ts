@@ -39,8 +39,3 @@ vi.mock("react-confetti", () => {
     default: (_: unknown) => null,
   };
 });
-
-// runs a cleanup after each test case (e.g. clearing jsdom)
-afterEach(() => {
-  cleanup();
-});

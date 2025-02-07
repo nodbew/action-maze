@@ -14,7 +14,7 @@ describe.concurrent("All credits are properly shown on the screen", () => {
     expect((resetButton as HTMLAnchorElement).pathname).toStrictEqual("/");
   });
   it("The inventory box is shown correctly", () => {
-    const box = screen.getByText("Inventory").parentElement;
+    const box = screen.getByTestId("Inventory");
     expect(box).toBeInstanceOf(HTMLDivElement);
 
     const availableItems = Object.keys(ITEMS);
@@ -36,23 +36,22 @@ describe.concurrent("All credits are properly shown on the screen", () => {
     expect(
       screen.getByRole("heading", { hidden: false, level: 1 })
     ).toBeInTheDocument());
-  it("The actions are shown correctly",
-    () => {
-      // Command component has a label, but it's empty because the page doesn't assign it
-      const actions = screen.getByLabelText("");
-      expect(actions).toBeInstanceOf(HTMLDivElement);
+  it("The actions are shown correctly", () => {
+    // Command component has a label, but it's empty because the page doesn't assign it
+    const actions = screen.getByTestId("Actions");
+    expect(actions).toBeInstanceOf(HTMLDivElement);
 
-      // Check all options contain either a link to the end or a button
-      actions.querySelectorAll("option").forEach((action) => {
-        if (action.querySelector("a") != null) {
-          expect(
-            action.querySelector("a")!.pathname.split("/")[1] in
-              ["success", "failure", "error"]
-          ).toBe(true);
-        } else {
-          expect(action.querySelector("button")).toBeInstanceOf(HTMLDivElement);
-          expect(action.querySelector("button")?.onclick).toBeDefined();
-        }
-      });
+    // Check all options contain either a link to the end or a button
+    actions!.querySelectorAll("option").forEach((action) => {
+      if (action.querySelector("a") != null) {
+        expect(
+          action.querySelector("a")!.pathname.split("/")[1] in
+            ["success", "failure", "error"]
+        ).toBe(true);
+      } else {
+        expect(action.querySelector("button")).toBeInstanceOf(HTMLDivElement);
+        expect(action.querySelector("button")?.onclick).toBeDefined();
+      }
     });
+  });
 });

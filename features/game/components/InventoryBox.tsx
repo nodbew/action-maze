@@ -1,16 +1,25 @@
 import { Inventory } from "@/features/game/types/inventory";
-import { Command, CommandItem, CommandList } from "@/components/ui/command";
+import {
+  Command,
+  CommandGroup,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
 import { ComponentProps } from "react";
 
 export default function InventoryBox(
-  props: ComponentProps<typeof Command> & { inventory: Inventory }
+  props: Omit<
+    ComponentProps<typeof Command> & { inventory: Inventory },
+    "label"
+  >
 ) {
   const { inventory, ...others } = props;
+  others.className = `flex flex-col ${others.className}`;
   return (
-    <Command {...others}>
-      <h2 className="text-bold text-5xl md:text-3xl sm:text-lg p-5 md:p-3 sm:p-1">
+    <Command {...others} data-testid="Inventory">
+      <h3 className="text-bold text-5xl md:text-3xl sm:text-xl p-5 md:p-3 sm:p-1 self-center">
         Inventory
-      </h2>
+      </h3>
       <CommandList>
         {inventory.map((item, idx) =>
           item.show ? (
