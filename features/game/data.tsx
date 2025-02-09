@@ -137,7 +137,15 @@ export const SITUATIONS = {
       },
     ]
   ),
-  PLACEHOLDER: createSituation("THIS IS A PLACEHOLDER", []),
+  PLACEHOLDER: createSituation("THIS IS A PLACEHOLDER", [
+    {
+      type: "end",
+      description: "Exit",
+      navigate: NAVIGATION_TARGET.FAILURE,
+      message: "Exited game",
+      requiredItems: ["Key"],
+    }
+  ]),
   Maze: createSituation(
     "A narrow path appeared before you. Will you proceed?",
     [
