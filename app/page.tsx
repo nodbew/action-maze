@@ -6,7 +6,7 @@ import Link from "next/link";
 export default function Page() {
   return (
     <div className="flex flex-col h-full relative">
-      <h1 className="self-start w-full mt-5 p-2 font-bold text-center text-9xl">
+      <h1 className="self-start w-full mt-5 p-2 font-bold text-center text-9xl md:text-6xl sm:text-3xl">
         TITLE
       </h1>
       <div className="absolute top-1/2 left-0 w-full">
@@ -25,11 +25,11 @@ export default function Page() {
           slotProps={{
             DialogTrigger: {
               className:
-                "ml-40 mr-auto w-1/12 h-full bg-primary text-accent rounded-full",
+                "ml-40 sm:ml-10 mr-auto w-1/12 h-full bg-primary text-accent rounded-full",
             },
           }}
         />
-        <CreditsPageLink className="mr-40 ml-auto w-1/12 h-full bg-primary text-accent rounded-full" />
+        <CreditsPageLink className="mr-40 sm:mr-10 ml-auto w-1/12 h-full bg-primary text-accent rounded-full" />
       </div>
     </div>
   );

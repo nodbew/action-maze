@@ -35,17 +35,17 @@ export default function Page() {
 
   return (
     <div className="flex flex-col h-full">
-      <ResetButton className="fixed left-5 top-5 p-5" />
+      <ResetButton className="fixed left-5 top-5 p-5 sm:p-3" />
       <InventoryBox
         className="fixed right-10 top-20 w-2/12 h-2/3 border-primary border-2 rounded-md bg-transparent"
         inventory={inventory}
       />
 
-      <h1 className="text-center self-center w-2/3 mt-10 p-2 text-5xl whitespace-pre-wrap">
+      <h1 className="text-center self-center w-2/3 mt-10 sm:mt-5 p-2 text-5xl sm:text-2xl whitespace-pre-wrap">
         {description}
       </h1>
       <Actions
-        className="mb-10 mt-auto w-2/3 h-fit self-center border-primary border-2 rounded-md"
+        className="mb-10 sm:mb-3 mt-auto w-2/3 h-fit min-h-1/10 self-center border-primary border-2 rounded-md"
         actions={possibleActions}
         variables={{
           inventory,
