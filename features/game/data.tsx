@@ -22,7 +22,8 @@ export type SituationNames =
   | "MemorizationBread"
   | "Maze"
   | "Key"
-  | "Door";
+  | "Door"
+  | "PLACEHOLDER";
 export const SITUATIONS = {
   Start: createSituation(
     "You woke up. \nThere are two paths, and the right one is . \nWhich path will you take?",
@@ -127,15 +128,16 @@ export const SITUATIONS = {
       {
         type: "next",
         description: "Middle",
-        navigate: "",
+        navigate: "PLACEHOLDER",
       },
       {
         type: "next",
         description: "Right",
-        navigate: "",
+        navigate: "PLACEHOLDER",
       },
     ]
   ),
+  PLACEHOLDER: createSituation("THIS IS A PLACEHOLDER", []),
   Maze: createSituation(
     "A narrow path appeared before you. Will you proceed?",
     [
