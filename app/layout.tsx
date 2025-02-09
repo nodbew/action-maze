@@ -47,7 +47,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <div className="flex justify-center w-dvw h-dvh">
-            <div className="w-3/4 h-dvh overflow-auto">{children}</div>
+            <div className="w-3/4 sm:w-dvw h-dvh overflow-auto">{children}</div>
           </div>
         </ThemeProvider>
       </body>

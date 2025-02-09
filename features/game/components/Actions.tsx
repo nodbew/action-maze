@@ -29,7 +29,7 @@ export default function Actions(
   } = props;
   return (
     <Command {...others} data-testid="Actions">
-      <CommandList className="max-h-none w-full">
+      <CommandList className="max-h-none w-full overflow-auto">
         {actions.map(({ component }, idx) => (
           <CommandItem key={idx} className="text-2xl">
             {component({

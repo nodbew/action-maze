@@ -12,7 +12,7 @@ export default function InventoryBox(
   others.className = `flex flex-col ${others.className}`;
   return (
     <Command {...others} data-testid="Inventory">
-      <h3 className="text-bold text-5xl sm:text-xl p-5 sm:p-1 self-center">
+      <h3 className="text-bold text-5xl sm:text-xl p-5 sm:p-1 self-center overflow-auto">
         Inventory
       </h3>
       <CommandList>

@@ -41,7 +41,7 @@ export default function Page() {
         inventory={inventory}
       />
 
-      <h1 className="text-center self-center w-2/3 mt-10 sm:mt-5 p-2 text-5xl sm:text-2xl whitespace-pre-wrap">
+      <h1 className="text-center self-center w-2/3 mt-10 sm:mt-5 p-2 text-5xl sm:text-md whitespace-pre-wrap">
         {description}
       </h1>
       <Actions
