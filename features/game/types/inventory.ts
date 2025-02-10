@@ -1,8 +1,9 @@
-import { ITEMS } from "../data";
+import { ItemNames } from "../data";
 
-export interface Item<Name extends string> {
-  name: Name;
+export interface Item {
   show: boolean;
   stackable: boolean;
 }
-export type Inventory = Array<Item<keyof typeof ITEMS>>;
+export type Inventory = {
+  [P in ItemNames]?: number
+};

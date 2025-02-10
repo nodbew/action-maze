@@ -2,8 +2,9 @@ import { Button } from "@/components/ui/button";
 import { ComponentProps } from "react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { ITEMS, SituationNames } from "../data";
+import { ItemNames, ITEMS, SituationNames } from "../data";
 import type { Action, Situation } from "../types/situation";
+import { Inventory } from "../types/inventory";
 
 export const NAVIGATION_TARGET = {
   SUCCESS: Symbol("Success"),
@@ -20,14 +21,14 @@ export function createSituation(
       | {
         type: "next";
         navigate: SituationNames | number;
-        requiredItems?: Array<keyof typeof ITEMS>;
-        addItems?: Array<keyof typeof ITEMS>;
+        requiredItems?: Inventory;
+        addItems?: Array<ItemNames>;
       }
       | {
         type: "end";
         navigate: (typeof NAVIGATION_TARGET)[keyof typeof NAVIGATION_TARGET];
         message: string;
-        requiredItems?: Array<keyof typeof ITEMS>;
+        requiredItems?: Inventory;
       }
       | {
         type: "raw";
@@ -46,29 +47,34 @@ export function createSituation(
           situationHistory,
           setSituationHistory,
         }) => {
-          const { description, navigate, requiredItems, addItems } = option;
+          const { description, navigate, requiredItems = {}, addItems } = option;
           // Check if there are necessary items for selecting the option
           const disabled = !(
-            requiredItems?.every((itemName) =>
-              inventory.some((item2) => itemName === item2.name)
-            ) ?? true
+            Object.keys(requiredItems).every((itemName) => {
+              const name = itemName as keyof typeof requiredItems;
+              // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+              inventory[name] ?? -1 > requiredItems[name]! // Object.keys(obj) will not return a property that is not in the obj
+            })
           );
           // Callback to call when the option is selected
           const handleClick = () => {
             // Add items to inventory
-            const itemsToAdd =
-              addItems?.filter(
-                (item) =>
-                  ITEMS[item].stackable ||
-                  !inventory.some((item2) => ITEMS[item].name === item2.name)
-              ) ?? []; // Filter out items that are not stackable and is already in inventory
-            setInventory((prev) => [
-              ...prev,
-              ...itemsToAdd.map((item) => ITEMS[item]),
-            ]);
+            setInventory(p => {
+              const prev = { ...p };
+              addItems?.forEach(name => {
+                if (prev[name] == undefined) {
+                  prev[name] = 1;
+                } else {
+                  if ((ITEMS[name].stackable === true) || (ITEMS[name].stackable === false && prev[name] === 0)) {
+                    prev[name] += 1;
+                  }
+                }
+              });
+              return prev;
+            })
             // Redirect to the next situation
             if (typeof navigate === "number") {
-              if (navigate <= situationHistory.length) {
+              if (situationHistory.at(navigate) == undefined) {
                 redirect(
                   `/result/error/${encodeURIComponent(
                     "Internal Error: Failed to navigate to a previous page"
@@ -99,13 +105,15 @@ export function createSituation(
       }
       // Navigate to a result page
       case "end": {
-        const { description, navigate, requiredItems, message } = option;
+        const { description, navigate, requiredItems = {}, message } = option;
         const component: Action["component"] = ({ inventory }) => {
           // Check if there are necessary items for selecting the option
           const disabled = !(
-            requiredItems?.every((itemName) =>
-              inventory.some((item2) => itemName === item2.name)
-            ) ?? true
+            Object.keys(requiredItems).every((itemName) => {
+              const name = itemName as keyof typeof requiredItems;
+              // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+              inventory[name] ?? -1 > requiredItems[name]! // Object.keys(obj) will not return a property that is not in the obj
+            })
           );
           let href;
           switch (navigate) {

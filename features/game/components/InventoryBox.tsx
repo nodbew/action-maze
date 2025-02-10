@@ -1,6 +1,7 @@
 import { Command, CommandItem, CommandList } from "@/components/ui/command";
 import { Inventory } from "@/features/game/types/inventory";
 import { ComponentProps } from "react";
+import { ITEMS } from "../data";
 
 export default function InventoryBox(
   props: Omit<
@@ -16,10 +17,10 @@ export default function InventoryBox(
         Inventory
       </h3>
       <CommandList className="overflow-auto">
-        {inventory.map((item, idx) =>
-          item.show ? (
+        {Object.keys(inventory).map((item, idx) =>
+          ITEMS[item as keyof typeof inventory].show ? (
             <CommandItem key={idx} className="text-bold text-md md:text-xl lg:text-3xl">
-              {item.name}
+              {item}: {inventory[item as keyof typeof inventory]}
             </CommandItem>
           ) : null
         )}

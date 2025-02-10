@@ -5,12 +5,13 @@ import {
 import { Item } from "./types/inventory";
 import { Situation } from "./types/situation";
 
-export type ItemNames = "MazeRouteMemory" | "Time Furoshiki" | "Key";
+export type ItemNames = "MazeRouteMemory" | "Time Furoshiki" | "Key" | "PatienceScore";
 export const ITEMS = {
-  MazeRouteMemory: { name: "MazeRouteMemory", show: false, stackable: false },
-  "Time Furoshiki": { name: "Time Furoshiki", show: true, stackable: false },
-  Key: { name: "Key", show: true, stackable: false },
-} as const satisfies Record<ItemNames, Item<ItemNames>>;
+  MazeRouteMemory: { show: false, stackable: false },
+  "Time Furoshiki": { show: true, stackable: false },
+  Key: { show: true, stackable: false },
+  "PatienceScore": { show: false, stackable: true },
+} as const satisfies Record<ItemNames, Item>;
 
 export type SituationNames =
   | "Start"
@@ -19,14 +20,20 @@ export type SituationNames =
   | "Monomosu"
   | "ListenToWall"
   | "Crossroad"
+  | "TimeFuroshiki"
   | "MemorizationBread"
   | "Maze"
   | "Key"
   | "Door"
-  | "PLACEHOLDER";
+  | "TakeCopter"
+  | "Saiminki"
+  | "Hypnotized"
+  | "ObtainKey"
+  | "RainingUmbrella"
+  | "Raining";
 export const SITUATIONS = {
   Start: createSituation(
-    "You woke up. \nThere are two paths, and the right one is . \nWhich path will you take?",
+    "There are two paths, and the left one is foggy. \nWhich path will you take?",
     [
       {
         type: "next",
@@ -38,12 +45,12 @@ export const SITUATIONS = {
         description: "Left",
         navigate: NAVIGATION_TARGET.FAILURE,
         message:
-          "You fall into a time tunnel, and is sent back to an ancient era... And a dinasour ate you!",
+          "You fall into a time tunnel, and are sent back to an ancient era... And a dinasour ate you!",
       },
     ]
   ),
   ConductorRobot: createSituation(
-    "You advance, and you see a huge robot sitting in front of you. It is making loud noises, and seems to be angry... \nWhat will you do?",
+    "You advance, and you see a huge robot sitting in front of you. \nIt is making loud noises, and seems to be angry... \nWhat will you do?",
     [
       {
         type: "next",
@@ -55,26 +62,36 @@ export const SITUATIONS = {
         description: "ignore and advance",
         navigate: "Monomosu",
       },
+      {
+        type: "next",
+        description: "Go back",
+        navigate: -1,
+      }
     ]
   ),
   TimeCapsule: createSituation(
-    "You find a time capsule inside the robot. What will you do with it?",
+    "You find a time capsule inside the robot. \nWhat will you do with it?",
     [
       {
         type: "end",
         description: "Let's see what's inside it...",
         navigate: NAVIGATION_TARGET.FAILURE,
-        message: "There was a skeleton!",
+        message: "There was a skeleton! You got a heart shock an died!",
       },
       {
         type: "next",
         description: "Better not touch",
         navigate: "Monomosu",
       },
+      {
+        type: "next",
+        description: "Go back",
+        navigate: -1,
+      }
     ]
   ),
   Monomosu: createSituation(
-    "You found a misterious flask on the ground. What will you do?",
+    "You found a mysterious flask on the ground. \nWhat will you do?",
     [
       {
         type: "next",
@@ -84,12 +101,12 @@ export const SITUATIONS = {
       {
         type: "next",
         description: "Go back",
-        navigate: "Crossroad",
+        navigate: -1,
       },
     ]
   ),
   ListenToWall: createSituation(
-    'The wall started talking! \n"Go left and you will find a piece of bread..."\n Will you trust it?',
+    'The wall started talking! \n\t"Go left and you will find a piece of bread..."\n Will you trust it?',
     [
       {
         type: "next",
@@ -101,9 +118,14 @@ export const SITUATIONS = {
         description: "It must be a trap",
         navigate: "Crossroad",
       },
+      {
+        type: "next",
+        description: "Go back",
+        navigate: -1,
+      }
     ]
   ),
-  MemorizationBread: createSituation("You found a bread! Will you eat it?", [
+  MemorizationBread: createSituation("You found a bread! \nWill you eat it?", [
     {
       type: "next",
       description: "Why not?",
@@ -115,43 +137,134 @@ export const SITUATIONS = {
       description: "Too dangerous",
       navigate: "Crossroad",
     },
+    {
+      type: "next",
+      description: "Go back",
+      navigate: -1,
+    }
   ]),
   Crossroad: createSituation(
-    "You came to a crossroad. Which path will you take?",
+    "You came to a crossroad. \nWhich path will you take?",
     [
       {
-        type: "end",
+        type: "next",
         description: "Left",
-        navigate: NAVIGATION_TARGET.FAILURE,
-        message: "You fell into a pitfall!",
+        navigate: "TimeFuroshiki",
       },
       {
         type: "next",
         description: "Middle",
-        navigate: "PLACEHOLDER",
+        navigate: "Saiminki",
       },
       {
         type: "next",
         description: "Right",
-        navigate: "PLACEHOLDER",
+        navigate: "TakeCopter",
       },
+      {
+        type: "next",
+        description: "Go back",
+        navigate: -1,
+      }
     ]
   ),
-  PLACEHOLDER: createSituation("THIS IS A PLACEHOLDER", [
+  TimeFuroshiki: createSituation("There is a cloth on a rock! It has many clocks printed on it... or is it a real one?", [
     {
       type: "next",
-      description: "Exit",
-      navigate: "Start",
-      requiredItems: ["Key"],
+      description: "Might be useful...",
+      addItems: ["Time Furoshiki"],
+      navigate: "Crossroad"
+    },
+    {
+      type: "end",
+      description: "Are they real clocks?",
+      navigate: NAVIGATION_TARGET.FAILURE,
+      message: "You are sent back to an ancient era...\nAnd fell into lava!"
+    },
+    {
+      type: "end",
+      description: "My time has come...",
+      requiredItems: {"PatienceScore": 5},
+      navigate: NAVIGATION_TARGET.SUCCESS,
+      message: "Peaceful mind is the essense of the light side...\nMay the Force be with you!"
+    }
+  ]),
+  Saiminki: createSituation("There is a machine on the ground.", [
+    {
+      type: "next",
+      description: "It has a button...",
+      navigate: "Hypnotized",
+    },
+    {
+      type: "next",
+      description: "Certainly not a safe thing to touch",
+      navigate: "RainingUmbrella",
+    },
+    {
+      type: "next",
+      description: "Go back",
+      navigate: -1,
+    }
+  ]),
+  Hypnotized: createSituation("The machine started to spin, and you fell asleep! When you woke up...", [
+    {
+      type: "next",
+      description: "and...?",
+      navigate: "ObtainKey",
+    },
+  ]),
+  ObtainKey: createSituation("A rusty key has appeared!", [
+    {
+      type: "next",
+      description: "Am I fooled?",
+      navigate: "Crossroad",
+      addItems: ["Key"]
+    }
+  ]),
+  RainingUmbrella: createSituation("Suddenly, an umbrella fell from the sky.\nWhat will you do?", [
+    {
+      type: "next",
+      description: "Interesting. Is it still usable?",
+      navigate: "Raining",
+    },
+    {
+      type: "next",
+      description: "Aw! This path is haunted!",
+      navigate: "Crossroad",
+    },
+  ]),
+  Raining: createSituation("There is a storm inside the umbrella!", [
+    {
+      type: "next",
+      description: "Damn!",
+      navigate: "TakeCopter",
+    }
+  ]),
+  TakeCopter: createSituation("There is a weirdly shaped stick on the ground. \n What will you do with it?", [
+    {
+      type: "end",
+      description: "Let's see it closely",
+      navigate: NAVIGATION_TARGET.FAILURE,
+      message: "The stick started to fly. You fell and hurt your back!"
+    },
+    {
+      type: "next",
+      description: "Better not to touch",
+      navigate: "Maze"
+    },
+    {
+      type: "next",
+      description: "Go back",
+      navigate: -1,
     }
   ]),
   Maze: createSituation(
-    "A narrow path appeared before you. Will you proceed?",
+    "A narrow path appeared before you. \nWill you proceed?",
     [
       {
         type: "next",
         description: "Go!",
-        requiredItems: ["MazeRouteMemory"],
+        requiredItems: {"MazeRouteMemory": 1},
         navigate: "Key",
       },
       {
@@ -165,7 +278,7 @@ export const SITUATIONS = {
     {
       type: "next",
       description: "What is it for...?",
-      requiredItems: ["Time Furoshiki"],
+      requiredItems: {"Time Furoshiki": 1},
       addItems: ["Key"],
       navigate: "Door",
     },
@@ -180,7 +293,7 @@ export const SITUATIONS = {
       type: "end",
       description: "A way out...?",
       navigate: NAVIGATION_TARGET.SUCCESS,
-      requiredItems: ["Key"],
+      requiredItems: {"Key": 1},
       message: "Congratulations, you made it out!",
     },
     {

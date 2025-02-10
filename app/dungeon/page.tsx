@@ -14,7 +14,7 @@ export default function Page() {
   const [situationHistory, setSituationHistory] = useState<SituationHistory>([
     "Start",
   ]);
-  const [inventory, setInventory] = useState<Inventory>([]);
+  const [inventory, setInventory] = useState<Inventory>({});
 
   // Get current state
   // situationHistory won't be truncated, and it has an initial value at 0. Therefore the value is not nullable
