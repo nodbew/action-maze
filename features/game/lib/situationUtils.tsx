@@ -83,7 +83,7 @@ export function createSituation(
               } else {
                 setSituationHistory((prev) => [
                   ...prev,
-                  situationHistory.at(-navigate)!,
+                  situationHistory.at(navigate)!,
                 ]);
               }
             } else {
