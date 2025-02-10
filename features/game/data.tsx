@@ -139,10 +139,9 @@ export const SITUATIONS = {
   ),
   PLACEHOLDER: createSituation("THIS IS A PLACEHOLDER", [
     {
-      type: "end",
+      type: "next",
       description: "Exit",
-      navigate: NAVIGATION_TARGET.FAILURE,
-      message: "Exited game",
+      navigate: "Start",
       requiredItems: ["Key"],
     }
   ]),

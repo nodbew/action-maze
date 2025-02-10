@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { ComponentProps } from "react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { ITEMS, SituationNames } from "../data";
@@ -9,32 +10,33 @@ export const NAVIGATION_TARGET = {
   FAILURE: Symbol("Failure"),
 } as const satisfies Record<string, symbol>;
 
+const GhostButton = (props: ComponentProps<typeof Button>) => <Button variant="ghost" className="hover:bg-transparent text-3xl p-0" {...props} />;
+
 /* Utility function for creating situation objects */
 export function createSituation(
   description: string,
   options: Array<
     { description: string } & (
       | {
-          type: "next";
-          navigate: SituationNames | number;
-          requiredItems?: Array<keyof typeof ITEMS>;
-          addItems?: Array<keyof typeof ITEMS>;
-        }
+        type: "next";
+        navigate: SituationNames | number;
+        requiredItems?: Array<keyof typeof ITEMS>;
+        addItems?: Array<keyof typeof ITEMS>;
+      }
       | {
-          type: "end";
-          navigate: (typeof NAVIGATION_TARGET)[keyof typeof NAVIGATION_TARGET];
-          message: string;
-          requiredItems?: Array<keyof typeof ITEMS>;
-        }
+        type: "end";
+        navigate: (typeof NAVIGATION_TARGET)[keyof typeof NAVIGATION_TARGET];
+        message: string;
+        requiredItems?: Array<keyof typeof ITEMS>;
+      }
       | {
-          type: "raw";
-          component: NonNullable<Action["component"]>;
-        }
+        type: "raw";
+        component: NonNullable<Action["component"]>;
+      }
     )
   >
 ): Situation {
-  const possibleActions: Situation["possibleActions"] = [];
-  for (const option of options) {
+  const possibleActions: Situation["possibleActions"] = options.map(option => {
     switch (option.type) {
       // Automatically generate a button component
       case "next": {
@@ -84,19 +86,18 @@ export function createSituation(
           };
 
           return (
-            <Button
-              variant="ghost"
-              className="hover:bg-transparent text-3xl p-0"
+            <GhostButton
               onClick={() => handleClick()}
               disabled={disabled}
             >
               {description}
-            </Button>
+            </GhostButton>
           );
         };
-        possibleActions.push({ description, component });
+        return { description, component };
         break;
       }
+      // Navigate to a result page
       case "end": {
         const { description, navigate, requiredItems, message } = option;
         const component: Action["component"] = ({ inventory }) => {
@@ -120,28 +121,23 @@ export function createSituation(
               )}`;
           }
           return (
-            <Link
-              href={href}
-              aria-disabled="true"
-              tabIndex={-1}
-              className={`text-3xl ${disabled ? "opacity-50" : ""}`}
-              onClick={(e) => {
-                if (disabled) {
-                  e.preventDefault();
-                }
-              }}
+            <GhostButton
+              disabled={disabled}
+              asChild
             >
-              {description}
-            </Link>
+              <Link href={href} aria-disabled="true" tabIndex={-1}>
+                {description}
+              </Link>
+            </GhostButton>
           );
         };
-        possibleActions.push({ description, component });
+        return { description, component };
         break;
       }
       case "raw":
-        possibleActions.push(option);
+        return option;
         break;
     }
-  }
+  });
   return { description, possibleActions };
 }
