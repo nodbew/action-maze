@@ -36,7 +36,7 @@ export default function ConfettiManager(
           min: -30,
           max: 30,
         }}
-        numberOfPieces={100}
+        numberOfPieces={350}
         gravity={2}
         {...props}
       />

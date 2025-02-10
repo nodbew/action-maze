@@ -10,7 +10,9 @@ export default function ResultMessage({
 }) {
   return (
     <div className="flex flex-col align-center h-full">
-      <h1 className="font-bold p-5 text-center text-xl md:text-3xl lg:text-5xl">{title}</h1>
+      <h1 className="font-bold p-5 text-center text-2xl md:text-4xl lg:text-6xl">
+        {title}
+      </h1>
       <p className="font-medium text-center text-lg md:text-xl lg:text-3xl whitespace-pre-line p-2">
         {description}
       </p>
