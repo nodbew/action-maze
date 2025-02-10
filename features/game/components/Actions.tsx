@@ -31,7 +31,7 @@ export default function Actions(
     <Command {...others} data-testid="Actions">
       <CommandList className="max-h-none w-full overflow-auto">
         {actions.map(({ component }, idx) => (
-          <CommandItem key={idx} className="text-2xl">
+          <CommandItem key={idx} className="text-xl md:text-3xl lg:text-5xl">
             {component({
               inventory,
               setInventory,

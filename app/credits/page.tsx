@@ -5,7 +5,7 @@ import LicenseView from "../../features/licensing/components/LicenseView";
 export default function Page() {
   return (
     <>
-      <h1 className="text-6xl p-4 pl-0">Credits</h1>
+      <h1 className="text-xl md:text-3xl lg:text-6xl p-4 pl-0">Credits</h1>
       <h5 className="mb-2">
         This project uses the following open source libraries:
       </h5>
