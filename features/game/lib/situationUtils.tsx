@@ -3,7 +3,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { ComponentProps } from "react";
 import { ITEMS, SituationNames } from "../data";
-import { Inventory } from "../types/inventory";
+import { Inventory, Item } from "../types/inventory";
 import type { Action, Situation } from "../types/situation";
 
 export const NAVIGATION_TARGET = {
@@ -78,7 +78,8 @@ export function createSituation(
                     prev[name] = addItems[name];
                   } else {
                     if (
-                      ITEMS[name].stackable === true ||
+                      // Cast needed because TypeScript is too clever; It assumes that ITEMS[name].stackable is false, because currently all items have their "stackable" property set to false
+                      (ITEMS[name].stackable as Item["stackable"]) === true ||
                       (ITEMS[name].stackable === false && prev[name] === 0)
                     ) {
                       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
