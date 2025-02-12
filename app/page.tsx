@@ -6,9 +6,11 @@ import Link from "next/link";
 export default function Page() {
   return (
     <div className="flex flex-col h-full relative">
-      <h1 className="self-start w-full mt-5 p-2 font-bold text-center text-2xl md:text-4xl lg:text-6xl">
-        Dungeon of Devices
-      </h1>
+      <div className="flex flex-col justify-center align-center h-1/2">
+        <h1 className="w-full p-5 font-bold text-center text-3xl md:text-5xl lg:text-7xl whitespace-pre-wrap">
+          Dungeon of Devices
+        </h1>
+      </div>
       <div className="absolute top-1/2 left-0 w-full">
         <div className="relative">
           <div className="absolute w-1/3 left-1/3 top-0 flex justify-center align-center">

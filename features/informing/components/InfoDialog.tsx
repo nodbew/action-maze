@@ -17,7 +17,7 @@ export default function InfoDialog(props: {
 }) {
   return (
     <Dialog {...props.slotProps?.Dialog}>
-      <DialogTrigger {...props.slotProps?.DialogTrigger}>info</DialogTrigger>
+      <DialogTrigger {...props.slotProps?.DialogTrigger}>story</DialogTrigger>
       <DialogContent {...props.slotProps?.DialogContent}>
         <DialogHeader>
           <DialogTitle className="text-center text-3xl border-b-2 border-primary pb-1 mb-3">
