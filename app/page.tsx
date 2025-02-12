@@ -6,7 +6,7 @@ import Link from "next/link";
 export default function Page() {
   return (
     <div className="flex flex-col h-full relative">
-      <h1 className="self-start w-full mt-5 p-2 font-bold text-center text-4xl md:text-7xl lg:text-9xl">
+      <h1 className="self-start w-full mt-5 p-2 font-bold text-center text-2xl md:text-4xl lg:text-6xl">
         Dungeon of Devices
       </h1>
       <div className="absolute top-1/2 left-0 w-full">
