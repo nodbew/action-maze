@@ -201,10 +201,9 @@ export const SITUATIONS = {
         message: "You are sent back to an ancient era...\nAnd fell into lava!",
       },
       {
-        type: "end",
-        description: "My time has come...",
-        navigate: NAVIGATION_TARGET.SUCCESS,
-        message: "...At least you came out of the dungeon.\nCongratulations!",
+        type: "next",
+        description: "Go back",
+        navigate: -2,
       },
     ]
   ),
