@@ -1,6 +1,6 @@
 {
   "name": "action-maze",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "packageManager": "pnpm@10.2.1",
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.6",
@@ -48,10 +48,10 @@
   },
   "private": true,
   "scripts": {
-    "build": "next build",
+    "build": "pnpm run generate-credits-page && next build",
     "dev": "pnpm run generate-credits-page && next dev --turbopack",
     "lint": "next lint",
-    "start": "next start",
+    "start": "pnpm run generate-credits-page && next start",
     "generate-credits-page": "pnpm license-report --output=html > ./public/credits.html",
     "run-vitest": "vitest",
     "run-playwright": "pnpm exec playwright test",
